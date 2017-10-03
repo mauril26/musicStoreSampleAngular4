@@ -1,0 +1,50 @@
+<form name="searchForm" action="" (ngSubmit)="onSearchSubmit(searchForm)" #searchForm="ngForm">
+  <label for="query">Artist, album or track</label>
+  <input type="text" name="query" id="query" minlength="3" required ngModel>
+
+  <label for="artist">Artist</label>
+  <input type="checkbox" checked name="artist" id="artist" value="artist" ngModel>
+  
+  <label for="album">Album</label>
+  <input type="checkbox" name="album" id="album" value="album" ngModel>
+  
+  <label for="track">Track</label>
+  <input type="checkbox" name="track" id="track" value="track" ngModel>
+  
+  <input type="submit" name="submitSearch" id="submitSearch" value="Search" [disabled]="searchForm.invalid">
+
+  <hr>
+  <h2>Artists</h2>
+  <ul>
+    <li *ngFor="let item of searchResults.artists.items">
+      <div>
+        <img *ngIf="item.images[1]!=undefined" src="{{ item.images[1].url}}" alt="{{item.name}}" width="200px"/>
+         <a href="artist/{{item.id}}"><h4>{{item.name}}</h4>({{item.popularity}}%)</a>
+      </div>
+    </li>
+  </ul>
+  <hr>
+  
+  <hr>
+  <h2>Albums</h2>
+  <ul>
+      <li *ngFor="let item of searchResults.albums.items">
+        <div>
+            <img *ngIf="item.images[1]!=undefined" src="{{ item.images[1].url}}" alt="{{item.name}}" width="200px"/>
+            <a href="album/{{item.id}}"><h4>{{item.name}}</h4></a>
+        </div>
+      </li>
+    </ul>
+  <hr>
+
+  <hr>
+  <h2>Tracks</h2>
+  <ul>
+      <li *ngFor="let item of searchResults.tracks.items">
+        <div>
+           <a href="track{{item.id}}"> <h4>{{item.name}}</h4> Track {{item.track_number}} ({{item.popularity}}%) - {{item.duration_ms/1000}}sec</a>
+        </div>
+      </li>
+    </ul>
+  <hr>
+</form>
