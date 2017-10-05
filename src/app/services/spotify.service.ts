@@ -9,12 +9,12 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class SpotifyService{
   
-  searchResultGotten = new Subject<void>();
+  resultGotten = new Subject<void>();
 
-  readonly API_ADDRESS: string = "http://localhost:5000/spotify/search";
+  readonly API_ADDRESS: string = "http://localhost:5000/spotify/";
   httpObject: Http;
 
-  searchResults = {"artists":undefined, "albums":undefined, "tracks":undefined};
+  searchResults = undefined;
   subscription;
 
   constructor(httpObject: Http) {
@@ -22,8 +22,11 @@ export class SpotifyService{
   }
 
   search(wrapper: SearchWrapper) {
-    console.log("Connecting to " + this.API_ADDRESS + wrapper.getUrl());
-    this.httpObject.get(this.API_ADDRESS + wrapper.getUrl())
+
+    let localUrl: string  = this.API_ADDRESS + "search" + wrapper.getUrl();
+    console.log("Querying " + localUrl);
+
+    this.httpObject.get(localUrl)
       .map((response: Response) => {
         try{
           return response.json();
@@ -34,22 +37,80 @@ export class SpotifyService{
       })
       .subscribe((json) => {
         try {
-          //const parsed = JSON.parse(json);
 
-          let artists:Artist[] = json.artists == undefined ? [] : json.artists;
-          let albums:Album[]   = json.albums  == undefined ? [] : json.albums;
-          let tracks:Track[]   = json.tracks  == undefined ? [] : json.tracks;
+          this.searchResults = {
+            "artists" : json.artists == undefined ? [] : json.artists,
+            "albums"  : json.albums  == undefined ? [] : json.albums,
+            "tracks"  : json.tracks  == undefined ? [] : json.tracks
+          };
 
-          this.searchResults.artists = artists;
-          this.searchResults.albums  = albums;
-          this.searchResults.tracks  = tracks;
-
-          this.searchResultGotten.next();
+          this.resultGotten.next();
         }
         catch(e){
           console.log("error: " + e);
           console.log(json);
         }
       });
+  }
+
+  getArtist(id: string){
+    this.searchResults = new Artist();
+    
+    let localUrl: string  = this.API_ADDRESS + "artist/" + id;
+    console.log("Querying " + localUrl);
+    
+    this.httpObject.get(localUrl)
+    .map((response: Response) => {
+      try{
+        return response.json();
+      }
+      catch(e){
+        return response.text();
+      }
+    })
+    .subscribe((json) => {
+      try{
+        this.searchResults.Name       = json.name;
+        this.searchResults.Popularity = json.popularity;
+        this.searchResults.Genres     = json.genres;
+        this.searchResults.Id         = json.id;
+        this.searchResults.Images     = json.images;
+        this.resultGotten.next();
+      }
+      catch(e){
+        console.log("error: " + e);
+        console.log(json);
+      }
+    });
+  }
+
+  getAlbum(id: string){
+    this.searchResults = new Album();
+
+    let localUrl: string  = this.API_ADDRESS + "album/" + id;
+    console.log("Querying " + localUrl);
+
+    this.httpObject.get(localUrl)
+    .map((response: Response) => {
+      try{
+        return response.json();
+      }
+      catch(e){
+        return response.text();
+      }
+    })
+    .subscribe((json) => {
+      try{
+        this.searchResults.Name    = json.name;
+        this.searchResults.Id      = json.id;
+        this.searchResults.Images  = json.images;
+        this.searchResults.Artists = json.artists;
+        this.resultGotten.next();
+      }
+      catch(e){
+        console.log("error: " + e);
+        console.log(json);
+      }
+    });
   }
 }

@@ -2,14 +2,13 @@
   <div class="col-md-12">
 
     <figure class="figure">
-      <img class="card-img border-0 rounded album-thumbnail" src="assets/img/noun_907578_cc.png" alt="[Album]" />
-      <figcaption class="figure-caption text-right">Popularity: [AlbumPopularity]%</figcaption>
+      <img *ngIf="albumData.Images!=undefined" class="card-img border-0 rounded album-thumbnail" src="{{albumData.Images[1].url}}" alt="[Album]" />
     </figure>
 
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">[AlbumName]</h4>
-        <p class="card-text">[ArtistsNames]</p>
+        <h4 class="card-title">{{albumData.Name}}</h4>
+        <p *ngIf="albumData.Artists!=undefined" class="card-text">{{albumData.Artists[0].name}}</p>
       </div>
     </div>
 

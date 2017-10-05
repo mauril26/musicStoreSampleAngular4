@@ -1,15 +1,15 @@
 <div class="row justify-content-center text-center">
   <div class="col-md-12">
-
+    
     <figure class="figure">
-      <img class="card-img border-0 rounded artist-thumbnail" src="assets/img/noun_641050_cc.png" alt="[Artist]" />
-      <figcaption class="figure-caption text-right">Popularity: [ArtistPopularity]%</figcaption>
+      <img *ngIf="artistData.Images!=undefined" class="card-img border-0 rounded artist-thumbnail" src="{{artistData.Images[1].url}}" alt="{{artistData.Name}}" />
+      <figcaption class="figure-caption text-right">Popularity: {{artistData.Popularity}}%</figcaption>
     </figure>
 
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">[ArtistName]</h4>
-        <p class="card-text">[ArtistGenres]</p>
+        <h4 class="card-title">{{artistData.Name}}</h4>
+        <p class="card-text">{{artistData.Genres}}</p>
       </div>
     </div>
 

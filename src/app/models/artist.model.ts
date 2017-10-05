@@ -4,12 +4,13 @@ export class Artist{
     Genres     : string[];
     Id         : string;
     Images     : JsonImage[];
+    TopTracks  : string[];
 }
 
 export class JsonImage{
-    width;
-    height;
-    url;
+    Width;
+    Height;
+    Url;
 }
 
 export class ArtistLite{

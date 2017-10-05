@@ -19,7 +19,7 @@ export class SearchboxComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.subscription = this.spotifyService.searchResultGotten.subscribe(
+      this.subscription = this.spotifyService.resultGotten.subscribe(
         ()=>{
           this.searchResults = this.spotifyService.searchResults;
           console.log(this.searchResults);

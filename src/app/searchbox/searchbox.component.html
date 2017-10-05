@@ -19,7 +19,7 @@
     <li *ngFor="let item of searchResults.artists.items">
       <div>
         <img *ngIf="item.images[1]!=undefined" src="{{ item.images[1].url}}" alt="{{item.name}}" width="200px"/>
-         <a href="artist/{{item.id}}"><h4>{{item.name}}</h4>({{item.popularity}}%)</a>
+         <a routerLink="../artist/{{item.id}}"><h4>{{item.name}}</h4>({{item.popularity}}%)</a>
       </div>
     </li>
   </ul>
@@ -31,7 +31,7 @@
       <li *ngFor="let item of searchResults.albums.items">
         <div>
             <img *ngIf="item.images[1]!=undefined" src="{{ item.images[1].url}}" alt="{{item.name}}" width="200px"/>
-            <a href="album/{{item.id}}"><h4>{{item.name}}</h4></a>
+            <a routerLink="../album/{{item.id}}"><h4>{{item.name}}</h4></a>
         </div>
       </li>
     </ul>

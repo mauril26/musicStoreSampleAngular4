@@ -17,11 +17,11 @@ import { AlbumListItemComponent } from './components/album-list-item/album-list-
 import { TrackListItemComponent } from './components/track-list-item/track-list-item.component';
 
 const routes = [
-  { path: 'search', component:  SearchboxComponent },
-  { path: 'artist', component:  SingleArtistComponent },
-  { path: 'album',  component:  SingleAlbumComponent },
-  { path: 'cart',   component:  CartComponent },
-  { path: '**',     redirectTo: '/search' }
+  { path: 'search',     component:  SearchboxComponent },
+  { path: 'artist/:id', component:  SingleArtistComponent },
+  { path: 'album/:id',  component:  SingleAlbumComponent },
+  { path: 'cart',       component:  CartComponent },
+  { path: '**',         redirectTo: '/search' }
 ];
 
 @NgModule({
