@@ -2,84 +2,41 @@ import { Component, OnInit } from '@angular/core';
 import { Http, Response } from '@angular/Http';
 import { SpotifyService } from '../services/spotify.service';
 import 'rxjs/add/operator/map';
+import { ActivatedRoute } from '@angular/router';
+import { SearchUpdateService } from '../services/searchUpdate.service';
 
 @Component({
   selector: 'app-searchbox',
-  providers: [SpotifyService],
+  providers: [SpotifyService, SearchUpdateService],
   templateUrl: './searchbox.component.html',
   styleUrls: ['./searchbox.component.css']
 })
 export class SearchboxComponent implements OnInit {
-  spotifyService: SpotifyService;
-  subscription;
   searchResults = {"artists":[], "albums":[], "tracks":[]};
 
-  constructor(spotifyService: SpotifyService) {
+  constructor(private activatedRoute: ActivatedRoute, private spotifyService: SpotifyService, private searchUpdateService: SearchUpdateService) {
     this.spotifyService = spotifyService;
   }
 
   ngOnInit() {
-      this.subscription = this.spotifyService.resultGotten.subscribe(
-        ()=>{
-          this.searchResults = this.spotifyService.searchResults;
-          console.log(this.searchResults);
-          console.log("response updated");
-      });    
-  }
+    this.spotifyService.resultGotten.subscribe(
+      ()=>{
+        this.searchResults = this.spotifyService.searchResults;
+    });
 
-  onSearchSubmit(searchForm){
-    let wrapper: SearchWrapper = new SearchWrapper();
-    wrapper.query  = searchForm.value.query;
-    wrapper.artist = searchForm.value.artist;
-    wrapper.album  = searchForm.value.album;
-    wrapper.track  = searchForm.value.track;
-    
-    try{
-      this.spotifyService.search(wrapper);
-    }
-    catch(e){
-      console.log(e);
-    }
-  }
-}
+    this.activatedRoute.queryParamMap.subscribe(
+    (queries)=>{
+      this.searchUpdateService.updateSearchBox(queries.get("q"));
 
-export class SearchWrapper {
-  _query  : string;
-  _artist : string;
-  _album  : string;
-  _track  : string;
+      let urlQuery:string = "";
 
-  set query(newValue: string) {
-    this._query = newValue;
-  }
+      queries.keys.forEach(element => {
+        urlQuery += `${element}=${queries.get(element)}&`;
+      });
 
-  set artist(newValue: string) {
-    this._artist = newValue;
-  }
+      if (urlQuery!="")
+        this.spotifyService.search(("?" + urlQuery));
 
-  set album(newValue: string) {
-    this._album = newValue;
-  }
-
-  set track(newValue: string) {
-    this._track = newValue;
-  }
-
-  getUrl() : string {
-    let filter : string[] = [];
-
-    if (this._artist != "")
-      filter.push("artist");
-
-    if (this._album != "")
-      filter.push("album");
-    
-    if (this._track != "")
-      filter.push("track");
-
-    if (this._artist == "" && this._album == "" && this._track == "")
-      filter = ["artist", "album", "track"];
-
-    return `?q=${this._query}&type=${filter.join(",")}`;
+    })
   }
 }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SearchWrapper } from '../searchbox/searchbox.component';
 import { Http, Response } from '@angular/http';
 import { Artist } from '../models/artist.model';
 import { Album } from '../models/album.model';
@@ -15,15 +14,15 @@ export class SpotifyService{
   httpObject: Http;
 
   searchResults = undefined;
-  subscription;
 
   constructor(httpObject: Http) {
+    console.log("Spotify Service");
     this.httpObject = httpObject;
   }
 
-  search(wrapper: SearchWrapper) {
+  search(query: string) {
 
-    let localUrl: string  = this.API_ADDRESS + "search" + wrapper.getUrl();
+    let localUrl: string = this.API_ADDRESS + "search" + query;
     console.log("Querying " + localUrl);
 
     this.httpObject.get(localUrl)

@@ -29,9 +29,9 @@ export class SingleAlbumComponent implements OnInit {
         console.log("response updated");
     });
 
-    this.activatedRoute.params.subscribe(
+    this.activatedRoute.paramMap.subscribe(
       (params) => {
-        this.spotifyService.getAlbum(params.id);
+        this.spotifyService.getAlbum(params.get("id"));
       });
   }
 

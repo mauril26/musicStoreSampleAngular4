@@ -10,28 +10,22 @@ import { Artist } from '../../models/artist.model';
   styleUrls: ['./single-artist.component.css']
 })
 export class SingleArtistComponent implements OnInit {
-
-  subscription;
-  spotifyService : SpotifyService;
-  activatedRoute : ActivatedRoute;
   artistData     : Artist = new Artist();
   
-  constructor(activatedRoute: ActivatedRoute, spotifyService: SpotifyService) {
-    this.activatedRoute = activatedRoute;
-    this.spotifyService = spotifyService;
+  constructor(private activatedRoute: ActivatedRoute, private spotifyService: SpotifyService) {
+
   }
 
   ngOnInit() {
-    this.subscription = this.spotifyService.resultGotten.subscribe(
+    this.spotifyService.resultGotten.subscribe(
       ()=>{
         this.artistData = this.spotifyService.searchResults;
         console.log("response updated");
     });   
 
-    this.activatedRoute.params.subscribe(
-      (params) => {
-        this.spotifyService.getArtist(params.id);
+  this.activatedRoute.paramMap.subscribe(
+    (params) => {
+        this.spotifyService.getArtist(params.get("id"));
       });
   }
-
 }
