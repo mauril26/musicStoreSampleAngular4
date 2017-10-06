@@ -8,11 +8,16 @@ import { Artist } from '../../models/artist.model';
 })
 export class ArtistListItemComponent implements OnInit {
   @Input()
-  artist: Artist;
+  artist;
 
-  constructor() { }
+  currentArtist: Artist = new Artist();
+
+  constructor() {
+
+  }
 
   ngOnInit() {
+    Object.assign(this.currentArtist, this.artist)
   }
 
 }

@@ -15,9 +15,9 @@ import { Track } from '../models/track.model';
   styleUrls: ['./searchbox.component.css']
 })
 export class SearchboxComponent implements OnInit {
-  Artists = new Array[typeof(Artist)]();
-  Albums  = new Array[typeof(Album)]();
-  Tracks  = new Array[typeof(Track)]();
+  Artists = [];
+  Albums  = [];
+  Tracks  = [];
 
   constructor(private activatedRoute: ActivatedRoute, private spotifyService: SpotifyService, private searchUpdateService: SearchUpdateService) {
     this.spotifyService = spotifyService;
@@ -27,8 +27,8 @@ export class SearchboxComponent implements OnInit {
     this.spotifyService.resultGotten.subscribe(
       ()=>{
         this.Artists = this.spotifyService.searchResults.Artists;
-        this.Artists = this.spotifyService.searchResults.Albums;
-        this.Artists = this.spotifyService.searchResults.Tracks;
+        this.Albums  = this.spotifyService.searchResults.Albums;
+        this.Tracks  = this.spotifyService.searchResults.Tracks;
     });
 
     this.activatedRoute.queryParamMap.subscribe(

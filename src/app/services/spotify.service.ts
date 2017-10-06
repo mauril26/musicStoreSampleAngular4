@@ -22,10 +22,11 @@ export class SpotifyService{
 
   search(query: string) {
     this.searchResults ={
-      Artist:new Array[typeof(Artist)](),
-      Albums:new Array[typeof(Album)](),
-      Tracks:new Array[typeof(Track)]()
+      Artist:[new Artist()],
+      Albums:[],
+      Tracks:[]
     }
+    
     let localUrl: string = this.API_ADDRESS + "search" + query;
     console.log("Querying " + localUrl);
 
@@ -42,10 +43,12 @@ export class SpotifyService{
         try {
 
           this.searchResults = {
-            Artists : json.artists == undefined ? [] : json.artists,
-            Albums  : json.albums  == undefined ? [] : json.albums,
-            Tracks  : json.tracks  == undefined ? [] : json.tracks
+            Artists : json.Artists == undefined ? [] : json.Artists,
+            Albums  : json.Albums  == undefined ? [] : json.Albums,
+            Tracks  : json.Tracks  == undefined ? [] : json.Tracks
           };
+
+          console.log(this.searchResults);
 
           this.resultGotten.next();
         }

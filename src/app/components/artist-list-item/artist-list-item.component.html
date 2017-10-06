@@ -1,3 +1,10 @@
-<a routerLink="../artist/{{artist.id}}"><h4>{{artist.name}}</h4>({{artist.popularity}}%)</a>
 
-<img *ngIf="artist.images[1]!=undefined" src="{{ artist.images[1].url}}" alt="{{artist.name}}" width="200px"/>
+<a routerLink="../artist/{{currentArtist.Id}}">
+    <div class="list-item text-center text-overflow-ellipsis">
+    
+        <img *ngIf="currentArtist.Images[1]==undefined" src="../assets/img/noun_641050_cc.png" alt="{{currentArtist.Name}}" class="img-thumbnail list-item-image"/>
+        <img *ngIf="currentArtist.Images[1]!=undefined" src="{{ currentArtist.Images[1].Url}}" alt="{{currentArtist.Name}}" class="img-thumbnail list-item-image"/>
+        <br />
+        <span class="artist-title">{{currentArtist.Name}}</span> <span class="badge badge-secondary">({{currentArtist.Popularity}}%)</span>
+    </div>
+</a>

@@ -9,14 +9,12 @@
     </div>
 
     <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-body">
-        <ul>
-          <li *ngFor="let item of Artists.items">
-            <div>
-              <app-artist-list-item [artist]="item"></app-artist-list-item>
-            </div>
-          </li>
-        </ul>
+      <div class="container-fluid">
+        <div class="row">
+          <div *ngFor="let item of Artists.Items">
+            <app-artist-list-item [artist]="item"></app-artist-list-item>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -32,14 +30,14 @@
     </div>
     <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
       <div class="card-body">
-        <ul>
-          <li *ngFor="let item of Albums.items">
+        <!-- <ul>
+          <li *ngFor="let item of Albums.Items">
             <div>
                 <img *ngIf="item.images[1]!=undefined" src="{{ item.images[1].url}}" alt="{{item.name}}" width="200px"/>
                 <a routerLink="../album/{{item.id}}"><h4>{{item.name}}</h4></a>
             </div>
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>
@@ -54,13 +52,13 @@
     </div>
     <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
       <div class="card-body">
-        <ul>
-          <li *ngFor="let item of Tracks.items">
+        <!-- <ul>
+          <li *ngFor="let item of Tracks.Items">
             <div>
                 <a href="track{{item.id}}"> <h4>{{item.name}}</h4> Track {{item.track_number}} ({{item.popularity}}%) - {{item.duration_ms/1000}}sec</a>
             </div>
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>
