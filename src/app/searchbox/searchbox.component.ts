@@ -4,6 +4,9 @@ import { SpotifyService } from '../services/spotify.service';
 import 'rxjs/add/operator/map';
 import { ActivatedRoute } from '@angular/router';
 import { SearchUpdateService } from '../services/searchUpdate.service';
+import { Artist } from '../models/artist.model';
+import { Album } from '../models/album.model';
+import { Track } from '../models/track.model';
 
 @Component({
   selector: 'app-searchbox',
@@ -12,7 +15,9 @@ import { SearchUpdateService } from '../services/searchUpdate.service';
   styleUrls: ['./searchbox.component.css']
 })
 export class SearchboxComponent implements OnInit {
-  searchResults = {"artists":[], "albums":[], "tracks":[]};
+  Artists = new Array[typeof(Artist)]();
+  Albums  = new Array[typeof(Album)]();
+  Tracks  = new Array[typeof(Track)]();
 
   constructor(private activatedRoute: ActivatedRoute, private spotifyService: SpotifyService, private searchUpdateService: SearchUpdateService) {
     this.spotifyService = spotifyService;
@@ -21,7 +26,9 @@ export class SearchboxComponent implements OnInit {
   ngOnInit() {
     this.spotifyService.resultGotten.subscribe(
       ()=>{
-        this.searchResults = this.spotifyService.searchResults;
+        this.Artists = this.spotifyService.searchResults.Artists;
+        this.Artists = this.spotifyService.searchResults.Albums;
+        this.Artists = this.spotifyService.searchResults.Tracks;
     });
 
     this.activatedRoute.queryParamMap.subscribe(

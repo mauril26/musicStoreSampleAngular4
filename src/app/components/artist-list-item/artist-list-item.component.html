@@ -1,3 +1,3 @@
-<p>
-  artist-list-item works!
-</p>
+<a routerLink="../artist/{{artist.id}}"><h4>{{artist.name}}</h4>({{artist.popularity}}%)</a>
+
+<img *ngIf="artist.images[1]!=undefined" src="{{ artist.images[1].url}}" alt="{{artist.name}}" width="200px"/>
