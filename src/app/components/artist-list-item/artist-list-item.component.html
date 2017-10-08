@@ -1,7 +1,6 @@
 
 <a routerLink="../artist/{{currentArtist.Id}}">
     <div class="list-item text-center text-overflow-ellipsis">
-    
         <img *ngIf="currentArtist.Images[1]==undefined" src="../assets/img/noun_641050_cc.png" alt="{{currentArtist.Name}}" class="img-thumbnail list-item-image"/>
         <img *ngIf="currentArtist.Images[1]!=undefined" src="{{ currentArtist.Images[1].Url}}" alt="{{currentArtist.Name}}" class="img-thumbnail list-item-image"/>
         <br />
